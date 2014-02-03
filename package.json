@@ -1,36 +1,36 @@
 {
-    "name": "gulp-qunit",
-    "version": "0.1.0",
-    "description": "Run QUnit unit tests in a headless PhantomJS instance.",
-    "license": "MIT",
-    "repository": "jonkemp/gulp-qunit",
-    "author": {
-        "name": "Jonathan Kemp",
-        "email": "kempdogg@gmail.com",
-        "url": "http://jonkemp.com"
-    },
-    "engines": {
-        "node": ">=0.10.0"
-    },
-    "scripts": {
-        "test": "mocha"
-    },
-    "files": [
-        "index.js"
-    ],
-    "keywords": [
-        "gulpplugin",
-        "test",
-        "testing",
-        "qunit"
-    ],
-    "dependencies": {
-        "map-stream": "~0.1.0",
-        "gulp-util": "~2.2.0",
-        "phantomjs": "~1.9.2-6"
-    },
-    "devDependencies": {
-        "mocha": "*",
-        "should": "*"
-    }
+  "name": "gulp-qunit",
+  "version": "0.1.1",
+  "description": "Run QUnit unit tests in a headless PhantomJS instance.",
+  "license": "MIT",
+  "repository": "jonkemp/gulp-qunit",
+  "author": {
+    "name": "Jonathan Kemp",
+    "email": "kempdogg@gmail.com",
+    "url": "http://jonkemp.com"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulpplugin",
+    "test",
+    "testing",
+    "qunit"
+  ],
+  "dependencies": {
+    "through2": "~0.4.0",
+    "gulp-util": "~2.2.0",
+    "phantomjs": "~1.9.2-6"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  }
 }

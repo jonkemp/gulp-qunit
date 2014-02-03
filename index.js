@@ -1,19 +1,20 @@
 var path = require('path');
 var childProcess = require('child_process');
-var map = require('map-stream');
 var gutil = require('gulp-util');
+var through = require('through2');
 var phantomjs = require('phantomjs');
 var binPath = phantomjs.path;
 
 module.exports = function(){
-    return map(function (file, cb){
+    return through.obj(function (file, enc, cb) {
         var childArgs = [
             path.join(__dirname, 'runner.js'),
             file.path
         ];
 
         if (file.isNull()) {
-            return cb(null, file);
+            this.push(file);
+            return cb();
         }
 
         childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
@@ -28,6 +29,8 @@ module.exports = function(){
             }
         });
 
-        cb(null, file);
+        this.push(file);
+
+        cb();
     });
 };
