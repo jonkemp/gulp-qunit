@@ -1,38 +1,32 @@
 /* jshint node: true */
 /* global describe, it */
 
-var should = require('should');
+var assert = require('assert');
 var gutil = require('gulp-util');
 var qunit = require('../index');
+var out = process.stdout.write.bind(process.stdout);
 
-describe('gulp-useref', function() {
-    it('file should pass through', function(done) {
-        var a = 0;
-
-        var fakeFile = new gutil.File({
-            path: './test/fixture/file.js',
-            cwd: './test/',
-            base: './test/fixture/',
-            contents: new Buffer('wadup();')
-        });
+describe('gulp-qunit', function() {
+    it('tests should pass', function(cb) {
+        this.timeout(5000);
 
         var stream = qunit();
-        stream.on('data', function(newFile){
-            should.exist(newFile);
-            should.exist(newFile.path);
-            should.exist(newFile.relative);
-            should.exist(newFile.contents);
-            newFile.path.should.equal('./test/fixture/file.js');
-            newFile.relative.should.equal('file.js');
-            ++a;
-        });
 
-        stream.once('end', function () {
-            a.should.equal(1);
-            done();
-        });
+        process.stdout.write = function (str) {
+            out(str);
 
-        stream.write(fakeFile);
+            if (/\s/.test(str)) {
+                assert(true);
+                process.stdout.write = out;
+                cb();
+            }
+        };
+
+        stream.write(new gutil.File({
+            path: './qunit/test-runner.html',
+            contents: new Buffer('')
+        }));
+
         stream.end();
     });
 });
