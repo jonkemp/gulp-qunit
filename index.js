@@ -1,3 +1,5 @@
+'use strict';
+
 var path = require('path');
 var childProcess = require('child_process');
 var gutil = require('gulp-util');
@@ -21,16 +23,17 @@ module.exports = function(){
             console.log(stdout);
 
             if (stderr !== '') {
-                console.log(stderr);
+                gutil.log('gulp-qunit: Failed to open test runner ' + gutil.colors.blue(file.relative));
+                return cb(new gutil.PluginError('gulp-qunit', stderr));
             }
 
             if (err !== null) {
-                console.log(err);
+                gutil.log('gulp-qunit: ' + gutil.colors.red("✖ ") + 'QUnit assertions failed in ' + gutil.colors.blue(file.relative));
+                return cb(new gutil.PluginError('gulp-imagemin', err));
             }
-        });
 
-        this.push(file);
-
-        cb();
+            this.push(file);
+            cb();
+        }.bind(this));
     });
 };
