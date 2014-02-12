@@ -15,7 +15,7 @@ describe('gulp-qunit', function() {
         process.stdout.write = function (str) {
             out(str);
 
-            if (/\s/.test(str)) {
+            if (/5 passed. 0 failed./.test(str)) {
                 assert(true);
                 process.stdout.write = out;
                 cb();
