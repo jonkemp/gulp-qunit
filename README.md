@@ -23,7 +23,7 @@ var gulp = require('gulp'),
     qunit = require('gulp-qunit');
 
 gulp.task('test', function() {
-    gulp.src('./qunit/test-runner.html')
+    return gulp.src('./qunit/test-runner.html')
         .pipe(qunit());
 });
 ```
