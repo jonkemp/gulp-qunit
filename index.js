@@ -9,7 +9,7 @@ module.exports = function(){
     return through.obj(function (file, enc, cb) {
         var childArgs = [
             path.join(__dirname, 'runner.js'),
-            path.join(__dirname, file.path)
+            file.path
         ];
 
         if (file.isNull()) {
