@@ -15,10 +15,6 @@
   "scripts": {
     "test": "mocha"
   },
-  "files": [
-    "runner.js",
-    "index.js"
-  ],
   "keywords": [
     "gulpplugin",
     "test",
