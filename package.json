@@ -16,8 +16,8 @@
     "test": "mocha"
   },
   "files": [
-    "index.js",
-    "runner.js"
+    "runner.js",
+    "index.js"
   ],
   "keywords": [
     "gulpplugin",
