@@ -24,16 +24,17 @@ module.exports = function(){
 
             if (stderr !== '') {
                 gutil.log('gulp-qunit: Failed to open test runner ' + gutil.colors.blue(file.relative));
-                return cb(new gutil.PluginError('gulp-qunit', stderr));
+                this.emit('error', new gutil.PluginError('gulp-qunit', stderr));
             }
 
             if (err !== null) {
                 gutil.log('gulp-qunit: ' + gutil.colors.red("✖ ") + 'QUnit assertions failed in ' + gutil.colors.blue(file.relative));
-                return cb(new gutil.PluginError('gulp-imagemin', err));
+                this.emit('error', new gutil.PluginError('gulp-qunit', err));
             }
 
             this.push(file);
-            cb();
+
+            return cb();
         }.bind(this));
     });
 };
