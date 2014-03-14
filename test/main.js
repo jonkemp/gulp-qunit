@@ -13,7 +13,7 @@ describe('gulp-qunit', function() {
         var stream = qunit();
 
         process.stdout.write = function (str) {
-            out(str);
+            //out(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
