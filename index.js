@@ -9,10 +9,11 @@ var binPath = phantomjs.path;
 module.exports = function(){
     'use strict';
     return through.obj(function (file, enc, cb) {
-        var childArgs = [
-            path.join(__dirname, 'runner.js'),
-            file.path
-        ];
+        var fpath = ~file.path.indexOf('http') ? file.path : 'file:///' + file.path.replace(/\\/g, '/'),
+            childArgs = [
+                path.join(__dirname, 'runner.js'), 
+                fpath
+            ];
 
         if (file.isStream()) {
             this.emit('error', new gutil.PluginError('gulp-qunit', 'Streaming not supported'));
