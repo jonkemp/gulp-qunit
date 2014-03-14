@@ -20,6 +20,8 @@ module.exports = function(){
         }
 
         childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
+            console.log('\nTesting ' + file.relative);
+
             console.log(stdout);
 
             if (stderr !== '') {
