@@ -9,9 +9,12 @@ var binPath = phantomjs.path;
 module.exports = function(){
     'use strict';
     return through.obj(function (file, enc, cb) {
+        var absolutePath = path.resolve(file.path),
+            isAbsolutePath = absolutePath.indexOf(file.path) >= 0;
+
         var childArgs = [
             path.join(__dirname, 'runner.js'),
-            file.path
+            (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
         ];
 
         if (file.isStream()) {
