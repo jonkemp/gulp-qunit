@@ -1,3 +1,4 @@
+'use strict';
 var path = require('path');
 var childProcess = require('child_process');
 var gutil = require('gulp-util');
@@ -7,7 +8,6 @@ var phantomjs = require('phantomjs');
 var binPath = phantomjs.path;
 
 module.exports = function(){
-    'use strict';
     return through.obj(function (file, enc, cb) {
         var absolutePath = path.resolve(file.path),
             isAbsolutePath = absolutePath.indexOf(file.path) >= 0;
@@ -23,16 +23,19 @@ module.exports = function(){
         }
 
         childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
-            console.log('\nTesting ' + file.relative);
+            gutil.log('Testing ' + file.relative);
 
-            console.log(stdout);
+            if (stdout) {
+                stdout = stdout.trim(); // Trim trailing cr-lf
+                gutil.log(stdout);
+            }
 
-            if (stderr !== '') {
-                gutil.log('gulp-qunit: Failed to open test runner ' + chalk.blue(file.relative));
+            if (stderr) {
+                gutil.log(stderr);
                 this.emit('error', new gutil.PluginError('gulp-qunit', stderr));
             }
 
-            if (err !== null) {
+            if (err) {
                 gutil.log('gulp-qunit: ' + chalk.red('✖ ') + 'QUnit assertions failed in ' + chalk.blue(file.relative));
                 this.emit('error', new gutil.PluginError('gulp-qunit', err));
             }
