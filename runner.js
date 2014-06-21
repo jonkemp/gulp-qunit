@@ -85,7 +85,8 @@
 
   function addLogging() {
     window.document.addEventListener('DOMContentLoaded', function() {
-      var currentTestAssertions = [];
+      var currentTestAssertions = [],
+        testExceptions = {};
 
       QUnit.log(function(details) {
         var response;
@@ -123,21 +124,23 @@
         name += result.name;
 
         if (result.failed) {
-          console.log('\n' + 'Test failed: ' + name);
+          var exceptions = currentTestAssertions.slice(0)[0].split('\n');
+          testExceptions[name] = exceptions.map(function(e) { return e.trim(); });
+          // console.log('\n' + 'Test failed: ' + name);
 
-          for (i = 0, len = currentTestAssertions.length; i < len; i++) {
-            console.log('    ' + currentTestAssertions[i]);
-          }
+          // for (i = 0, len = currentTestAssertions.length; i < len; i++) {
+          //   console.log('    ' + currentTestAssertions[i]);
+          // }
         }
 
         currentTestAssertions.length = 0;
       });
 
       QUnit.done(function(result) {
-        if(result.failed === 0) {
-          console.log(JSON.stringify(result))
-        }
-
+        console.log(JSON.stringify({
+          result: result,
+          exceptions: testExceptions
+        }))
         if (typeof window.callPhantom === 'function') {
           window.callPhantom({
             'name': 'QUnit.done',
