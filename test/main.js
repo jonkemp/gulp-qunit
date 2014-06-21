@@ -3,6 +3,7 @@
 
 'use strict';
 var assert = require('assert');
+var chalk = require('chalk');
 var gutil = require('gulp-util');
 var path = require('path');
 var qunit = require('../index');
@@ -16,6 +17,7 @@ describe('gulp-qunit', function() {
 
         process.stdout.write = function (str) {
             //out(str);
+            str = chalk.stripColor(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -37,8 +39,11 @@ describe('gulp-qunit', function() {
 
         var stream = qunit();
 
+
         process.stdout.write = function (str) {
             //out(str);
+
+            str = chalk.stripColor(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);

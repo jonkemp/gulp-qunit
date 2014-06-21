@@ -26,8 +26,13 @@ module.exports = function(){
             gutil.log('Testing ' + file.relative);
 
             if (stdout) {
-                stdout = stdout.trim(); // Trim trailing cr-lf
-                gutil.log(stdout);
+                try {
+                    var result = JSON.parse(stdout.trim());
+                    var output = 'Took ' + result.runtime + ' ms to run ' + chalk.blue(result.total) + ' tests. ' + chalk.green(result.passed) + ' passed, ' + chalk.red(result.failed) + ' failed.';
+                    gutil.log(output);
+                } catch(e) {
+                    gutil.log(stdout.trim());
+                }
             }
 
             if (stderr) {
