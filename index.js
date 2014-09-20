@@ -30,15 +30,22 @@ module.exports = function(){
                 gutil.log(stdout);
             }
 
+            var passed = true;
             if (stderr) {
                 gutil.log(stderr);
                 this.emit('error', new gutil.PluginError('gulp-qunit', stderr));
+
+                passed = false;
             }
 
             if (err) {
                 gutil.log('gulp-qunit: ' + chalk.red('✖ ') + 'QUnit assertions failed in ' + chalk.blue(file.relative));
                 this.emit('error', new gutil.PluginError('gulp-qunit', err));
+
+                passed = false;
             }
+
+            this.emit('gulp-qunit.finished', {'passed': passed});
 
             this.push(file);
 
