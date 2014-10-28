@@ -1,3 +1,7 @@
+.editorconfig
+.gitignore
+.jshintrc
+.travis.yml
 qunit
 test
 gulpfile.js
