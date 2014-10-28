@@ -28,6 +28,18 @@ gulp.task('test', function() {
 });
 ```
 
+With options:
+
+```js
+var gulp = require('gulp'),
+    qunit = require('gulp-qunit');
+
+gulp.task('test', function() {
+    return gulp.src('./qunit/test-runner.html')
+        .pipe(qunit({'phantomjs-options': ['--ssl-protocol=any']}));
+});
+```
+
 You no longer need this plugin to run QUnit tests in your gulp tasks. Now you can do this with [node-qunit-phantomjs](https://github.com/jonkemp/node-qunit-phantomjs), a stand alone module. It can also be used via command line, and it has an option for more verbose test reporting.
 ```js
 var gulp = require('gulp'),
@@ -38,6 +50,17 @@ gulp.task('test', function() {
 });
 ```
 
+## API
+
+### qunit(options)
+
+
+#### options.phantomjs-options
+
+Type: `Array`
+Default: `None`
+
+These options are passed on to PhantomJS. See the [PhantomJS documentation](http://phantomjs.org/api/command-line.html) for more information.
 
 ## License
 
