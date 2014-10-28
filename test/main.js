@@ -33,6 +33,29 @@ describe('gulp-qunit', function() {
         stream.end();
     });
 
+    it('tests should pass with options', function(cb) {
+        this.timeout(5000);
+
+        var stream = qunit({'phantomjs-options': ['--ssl-protocol=any']});
+
+        process.stdout.write = function (str) {
+            //out(str);
+
+            if (/10 passed. 0 failed./.test(str)) {
+                assert(true);
+                process.stdout.write = out;
+                cb();
+            }
+        };
+
+        stream.write(new gutil.File({
+            path: './qunit/test-runner.html',
+            contents: new Buffer('')
+        }));
+
+        stream.end();
+    });
+
     it('tests should pass with absolute source paths', function(cb) {
         this.timeout(5000);
 
