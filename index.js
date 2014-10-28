@@ -1,14 +1,16 @@
 'use strict';
-var path = require('path');
-var childProcess = require('child_process');
-var gutil = require('gulp-util');
-var chalk = require('chalk');
-var through = require('through2');
-var phantomjs = require('phantomjs');
-var binPath = phantomjs.path;
 
-module.exports = function(params){
+var path = require('path'),
+    childProcess = require('child_process'),
+    gutil = require('gulp-util'),
+    chalk = require('chalk'),
+    through = require('through2'),
+    phantomjs = require('phantomjs'),
+    binPath = phantomjs.path;
+
+module.exports = function (params) {
     var options = params || {};
+
     return through.obj(function (file, enc, cb) {
         var absolutePath = path.resolve(file.path),
             isAbsolutePath = absolutePath.indexOf(file.path) >= 0;
@@ -23,7 +25,9 @@ module.exports = function(params){
             return cb();
         }
 
-        childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
+        childProcess.execFile(binPath, childArgs, function (err, stdout, stderr) {
+            var passed = true;
+
             gutil.log('Testing ' + file.relative);
 
             if (stdout) {
@@ -31,18 +35,15 @@ module.exports = function(params){
                 gutil.log(stdout);
             }
 
-            var passed = true;
             if (stderr) {
                 gutil.log(stderr);
                 this.emit('error', new gutil.PluginError('gulp-qunit', stderr));
-
                 passed = false;
             }
 
             if (err) {
                 gutil.log('gulp-qunit: ' + chalk.red('✖ ') + 'QUnit assertions failed in ' + chalk.blue(file.relative));
                 this.emit('error', new gutil.PluginError('gulp-qunit', err));
-
                 passed = false;
             }
 

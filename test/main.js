@@ -2,13 +2,12 @@
 /* global describe, it */
 
 'use strict';
-var assert = require('assert');
-var gutil = require('gulp-util');
-var path = require('path');
-var qunit = require('../index');
-var out = process.stdout.write.bind(process.stdout);
 
-var events = require('events')
+var assert = require('assert'),
+    gutil = require('gulp-util'),
+    path = require('path'),
+    qunit = require('../index'),
+    out = process.stdout.write.bind(process.stdout);
 
 describe('gulp-qunit', function() {
     it('tests should pass', function(cb) {
@@ -62,9 +61,9 @@ describe('gulp-qunit', function() {
 
         var stream = qunit();
 
-        stream.on('gulp-qunit.finished', function(passed) {
+        stream.on('gulp-qunit.finished', function() {
             assert(true, 'phantom finished with errors');
-        })
+        });
 
         process.stdout.write = function (str) {
             //out(str);
@@ -82,8 +81,5 @@ describe('gulp-qunit', function() {
         }));
 
         stream.end();
-
-
-
     });
 });
