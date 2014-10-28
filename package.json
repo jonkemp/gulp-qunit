@@ -22,16 +22,16 @@
     "qunit"
   ],
   "dependencies": {
-    "through2": "^0.6.1",
+    "chalk": "^0.5.1",
     "gulp-util": "^3.0.0",
-    "phantomjs": "~1.9.2-6",
-    "chalk": "^0.5.1"
+    "phantomjs": "^1.9.12",
+    "through2": "^0.6.1"
   },
   "devDependencies": {
-    "mocha": "*",
+    "gulp": "^3.8.9",
+    "gulp-jshint": "^1.8.6",
+    "gulp-mocha": "^1.1.1",
     "gulp-util": "^3.0.0",
-    "gulp": "^3.6.0",
-    "gulp-mocha": "^1.0.0",
-    "gulp-jshint": "^1.5.3"
+    "mocha": "*"
   }
 }
