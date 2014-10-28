@@ -57,7 +57,7 @@ gulp.task('test', function() {
 
 #### options.phantomjs-options
 
-Type: `Array`
+Type: `Array`  
 Default: `None`
 
 These options are passed on to PhantomJS. See the [PhantomJS documentation](http://phantomjs.org/api/command-line.html) for more information.
