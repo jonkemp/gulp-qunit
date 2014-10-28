@@ -15,10 +15,14 @@ module.exports = function (params) {
         var absolutePath = path.resolve(file.path),
             isAbsolutePath = absolutePath.indexOf(file.path) >= 0;
 
-        var childArgs = (options['phantomjs-options'] || []).concat([
+        var childArgs = [
             path.join(__dirname, 'runner.js'),
             (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
-        ]);
+        ];
+
+        if (options['phantomjs-options'] && options['phantomjs-options'].length) {
+            childArgs.concat( options['phantomjs-options'] );
+        }
 
         if (file.isStream()) {
             this.emit('error', new gutil.PluginError('gulp-qunit', 'Streaming not supported'));
