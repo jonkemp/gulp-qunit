@@ -2,7 +2,8 @@
 
 var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
-    mocha = require('gulp-mocha');
+    mocha = require('gulp-mocha'),
+    qunit = require('./index');
 
 var paths = {
     scripts: ['./*.js', './test/*.js', '!./runner.js', '!./gulpfile.js']
@@ -17,6 +18,11 @@ gulp.task('lint', function() {
 gulp.task('test', function() {
     return gulp.src('./test/*.js')
         .pipe(mocha({reporter: 'dot'}));
+});
+
+gulp.task('qunit', function() {
+    return gulp.src('./qunit/test-runner.html')
+        .pipe(qunit());
 });
 
 gulp.task('watch', function () {
