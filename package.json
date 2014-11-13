@@ -24,7 +24,7 @@
   "dependencies": {
     "chalk": "^0.5.1",
     "gulp-util": "^3.0.0",
-    "phantomjs": "^1.9.12",
+    "phantomjs": "<1.9.8",
     "through2": "^0.6.1"
   },
   "devDependencies": {
