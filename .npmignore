@@ -2,6 +2,7 @@
 .gitignore
 .jshintrc
 .travis.yml
+CONTRIBUTING.md
 qunit
 test
 gulpfile.js
