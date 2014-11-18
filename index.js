@@ -21,7 +21,7 @@ module.exports = function (params) {
         ];
 
         if (options['phantomjs-options'] && options['phantomjs-options'].length) {
-            childArgs.concat( options['phantomjs-options'] );
+            childArgs = childArgs.concat( options['phantomjs-options'] );
         }
 
         if (file.isStream()) {
