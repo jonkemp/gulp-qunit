@@ -16,7 +16,7 @@ module.exports = function (params) {
             isAbsolutePath = absolutePath.indexOf(file.path) >= 0;
 
         var childArgs = [
-            path.join(__dirname, 'runner.js'),
+            path.normalize('./node_modules/qunit-phantomjs-runner/runner.js'),
             (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
         ];
 

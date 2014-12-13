@@ -25,6 +25,7 @@
     "chalk": "^0.5.1",
     "gulp-util": "^3.0.0",
     "phantomjs": "^1.9.12",
+    "qunit-phantomjs-runner": "^2.0.0",
     "through2": "^0.6.1"
   },
   "devDependencies": {
