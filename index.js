@@ -21,7 +21,7 @@ module.exports = function (params) {
         }
 
         childArgs = childArgs.concat([
-            path.join(__dirname, 'runner.js'),
+            path.normalize('./node_modules/qunit-phantomjs-runner/runner.js'),
             (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
         ]);
 
