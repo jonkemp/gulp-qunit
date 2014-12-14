@@ -17,13 +17,13 @@ module.exports = function (params) {
 
         var childArgs = [];
         if (options['phantomjs-options'] && options['phantomjs-options'].length) {
-            childArgs = childArgs.concat( options['phantomjs-options'] );
+            childArgs.push( options['phantomjs-options'] );
         }
 
-        childArgs = childArgs.concat([
+        childArgs.push(
             path.normalize('./node_modules/qunit-phantomjs-runner/runner.js'),
             (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
-        ]);
+        );
 
         if (file.isStream()) {
             this.emit('error', new gutil.PluginError('gulp-qunit', 'Streaming not supported'));
