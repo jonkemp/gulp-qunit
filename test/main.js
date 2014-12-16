@@ -26,7 +26,7 @@ describe('gulp-qunit', function() {
         };
 
         stream.write(new gutil.File({
-            path: './qunit/test-runner.html',
+            path: './test/fixtures/passing.html',
             contents: new Buffer('')
         }));
 
@@ -49,7 +49,32 @@ describe('gulp-qunit', function() {
         };
 
         stream.write(new gutil.File({
-            path: './qunit/test-runner.html',
+            path: './test/fixtures/passing.html',
+            contents: new Buffer('')
+        }));
+
+        stream.end();
+    });
+
+    it('tests should time out', function(cb) {
+        this.timeout(10000);
+
+        var stream = qunit({ 'timeout': 1 });
+
+        process.stdout.write = function (str) {
+            //out(str);
+
+            if (/The specified timeout of 1 seconds has expired. Aborting.../.test(str)) {
+                assert(true);
+                process.stdout.write = out;
+                cb();
+            }
+        };
+
+        stream.on('error', function () {});
+
+        stream.write(new gutil.File({
+            path: './test/fixtures/async.html',
             contents: new Buffer('')
         }));
 
@@ -83,7 +108,7 @@ describe('gulp-qunit', function() {
         };
 
         stream.write(new gutil.File({
-            path: './qunit/test-runner.html',
+            path: './test/fixtures/passing.html',
             contents: new Buffer('')
         }));
 
@@ -106,7 +131,7 @@ describe('gulp-qunit', function() {
         };
 
         stream.write(new gutil.File({
-            path: path.resolve('./qunit/test-runner.html'),
+            path: path.resolve('./test/fixtures/passing.html'),
             contents: new Buffer('')
         }));
 
@@ -133,7 +158,7 @@ describe('gulp-qunit', function() {
         };
 
         stream.write(new gutil.File({
-            path: path.resolve('./qunit/test-runner.html'),
+            path: path.resolve('./test/fixtures/passing.html'),
             contents: new Buffer('')
         }));
 
