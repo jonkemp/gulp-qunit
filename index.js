@@ -25,6 +25,10 @@ module.exports = function (params) {
             (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
         );
 
+        if ( options.timeout ) {
+            childArgs.push( options.timeout );
+        }
+
         if (file.isStream()) {
             this.emit('error', new gutil.PluginError('gulp-qunit', 'Streaming not supported'));
             return cb();

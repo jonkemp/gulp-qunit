@@ -54,6 +54,12 @@ gulp.task('test', function() {
 
 ### qunit(options)
 
+#### options.timeout
+
+Type: `Number`  
+Default: `5`
+
+Pass a number or string value to override the default timeout of 5 seconds.
 
 #### options.phantomjs-options
 
