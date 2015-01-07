@@ -21,7 +21,7 @@ gulp.task('test', function() {
 });
 
 gulp.task('qunit', function() {
-    return gulp.src('./qunit/test-runner.html')
+    return gulp.src('./test/fixtures/passing.html')
         .pipe(qunit());
 });
 
