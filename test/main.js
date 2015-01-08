@@ -11,9 +11,9 @@ var assert = require('assert'),
     out = process.stdout.write.bind(process.stdout);
 
 describe('gulp-qunit', function() {
-    it('tests should pass', function(cb) {
-        this.timeout(5000);
+    this.timeout(5000);
 
+    it('tests should pass', function(cb) {
         var stream = qunit();
 
         process.stdout.write = function (str) {
@@ -36,12 +36,11 @@ describe('gulp-qunit', function() {
     });
 
     it('tests should pass with options', function(cb) {
-        this.timeout(5000);
-
         var stream = qunit({'phantomjs-options': ['--ssl-protocol=any']});
 
         process.stdout.write = function (str) {
             //out(str);
+            str = chalk.stripColor(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -84,8 +83,6 @@ describe('gulp-qunit', function() {
     });
 
     it('tests should not run when passing --help to PhantomJS', function(cb) {
-        this.timeout(5000);
-
         var stream = qunit({'phantomjs-options': ['--help']});
 
         process.stdout.write = function (str) {
@@ -118,8 +115,6 @@ describe('gulp-qunit', function() {
     });
 
     it('tests should pass with absolute source paths', function(cb) {
-        this.timeout(5000);
-
         var stream = qunit();
 
         process.stdout.write = function (str) {
@@ -142,8 +137,6 @@ describe('gulp-qunit', function() {
     });
 
     it('tests should pass and emit finished event', function(cb) {
-        this.timeout(5000);
-
         var stream = qunit();
 
         stream.on('gulp-qunit.finished', function() {
@@ -152,6 +145,7 @@ describe('gulp-qunit', function() {
 
         process.stdout.write = function (str) {
             //out(str);
+            str = chalk.stripColor(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);

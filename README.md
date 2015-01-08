@@ -1,4 +1,4 @@
-# [gulp](https://github.com/gulpjs/gulp)-qunit [![Build Status](https://travis-ci.org/jonkemp/gulp-qunit.png?branch=master)](https://travis-ci.org/jonkemp/gulp-qunit)
+# [gulp](https://github.com/gulpjs/gulp)-qunit [![Build Status](https://travis-ci.org/jonkemp/gulp-qunit.svg?branch=master)](https://travis-ci.org/jonkemp/gulp-qunit)
 
 > Run QUnit unit tests in a headless PhantomJS instance.
 
@@ -6,6 +6,7 @@ Run QUnit unit tests in a PhantomJS-powered headless test runner, providing basi
 
 Inspired by the grunt plugin [grunt-contrib-qunit](https://github.com/gruntjs/grunt-contrib-qunit).
 
+![](screenshot.png)
 
 ## Install
 
@@ -14,7 +15,6 @@ Install with [npm](https://npmjs.org/package/gulp-qunit)
 ```bash
 $ npm install --save-dev gulp-qunit
 ```
-
 
 ## Usage
 

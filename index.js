@@ -21,7 +21,7 @@ module.exports = function (params) {
         }
 
         childArgs.push(
-            path.join(__dirname, './node_modules/qunit-phantomjs-runner/runner.js'),
+            path.join(__dirname, './node_modules/qunit-phantomjs-runner/runner-json.js'),
             (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
         );
 
@@ -41,18 +41,27 @@ module.exports = function (params) {
 
             if (stdout) {
                 try {
-                  var out = JSON.parse(stdout.trim());
-                  var result = out.result;
-                  var output = 'Took ' + result.runtime + ' ms to run ' + chalk.blue(result.total) + ' tests. ' + chalk.green(result.passed) + ' passed, ' + chalk.red(result.failed) + ' failed.';
-                  gutil.log(output);
+                    var out,
+                        result;
 
-                  if(out.exceptions) {
-                    for(var test in out.exceptions) {
-                      output = '\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  ');
-                      gutil.log(output);
+                    if (stdout.indexOf('{') !== -1) {
+                        out = JSON.parse(stdout.trim());
+                        result = out.result;
+
+                        gutil.log('Took ' + result.runtime + ' ms to run ' + chalk.blue(result.total) + ' tests. ' + chalk.green(result.passed) + ' passed, ' + chalk.red(result.failed) + ' failed.');
+
+                        if(out.exceptions) {
+                            for(var test in out.exceptions) {
+                                gutil.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
+                            }
+                        }
+                    } else {
+                        stdout = stdout.trim(); // Trim trailing cr-lf
+                        gutil.log(stdout);
                     }
-                  }
-                } catch(e) {}
+                } catch (e) {
+                    this.emit('error', new gutil.PluginError('gulp-qunit', e));
+                }
             }
 
             if (stderr) {
@@ -66,7 +75,7 @@ module.exports = function (params) {
                 this.emit('error', new gutil.PluginError('gulp-qunit', err));
                 passed = false;
             } else {
-              gutil.log('gulp-qunit: ' + chalk.green('✔ ') + 'QUnit assertions all passed in ' + chalk.blue(file.relative));
+                gutil.log('gulp-qunit: ' + chalk.green('✔ ') + 'QUnit assertions all passed in ' + chalk.blue(file.relative));
             }
 
             this.emit('gulp-qunit.finished', {'passed': passed});

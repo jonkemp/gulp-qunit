@@ -6,7 +6,7 @@ var gulp = require('gulp'),
     qunit = require('./index');
 
 var paths = {
-    scripts: ['./*.js', './test/*.js', '!./runner.js', '!./gulpfile.js']
+    scripts: ['./*.js', './test/*.js', '!./gulpfile.js']
 };
 
 gulp.task('lint', function() {
