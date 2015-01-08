@@ -17,6 +17,7 @@ describe('gulp-qunit', function() {
 
         process.stdout.write = function (str) {
             //out(str);
+            str = chalk.stripColor(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -123,7 +124,7 @@ describe('gulp-qunit', function() {
         process.stdout.write = function (str) {
             //out(str);
 
-            if (/10 passed. 0 failed./.test(str)) {
+            str = chalk.stripColor(str);
                 assert(true);
                 process.stdout.write = out;
                 cb();

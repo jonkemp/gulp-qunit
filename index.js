@@ -40,8 +40,19 @@ module.exports = function (params) {
             gutil.log('Testing ' + file.relative);
 
             if (stdout) {
-                stdout = stdout.trim(); // Trim trailing cr-lf
-                gutil.log(stdout);
+                try {
+                  var out = JSON.parse(stdout.trim());
+                  var result = out.result;
+                  var output = 'Took ' + result.runtime + ' ms to run ' + chalk.blue(result.total) + ' tests. ' + chalk.green(result.passed) + ' passed, ' + chalk.red(result.failed) + ' failed.';
+                  gutil.log(output);
+
+                  if(out.exceptions) {
+                    for(var test in out.exceptions) {
+                      output = '\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  ');
+                      gutil.log(output);
+                    }
+                  }
+                } catch(e) {}
             }
 
             if (stderr) {
@@ -54,6 +65,8 @@ module.exports = function (params) {
                 gutil.log('gulp-qunit: ' + chalk.red('✖ ') + 'QUnit assertions failed in ' + chalk.blue(file.relative));
                 this.emit('error', new gutil.PluginError('gulp-qunit', err));
                 passed = false;
+            } else {
+              gutil.log('gulp-qunit: ' + chalk.green('✔ ') + 'QUnit assertions all passed in ' + chalk.blue(file.relative));
             }
 
             this.emit('gulp-qunit.finished', {'passed': passed});
