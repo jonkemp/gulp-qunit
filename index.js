@@ -44,9 +44,9 @@ module.exports = function (params) {
                     var out,
                         result;
 
-                    stdout.toString().split('\n').forEach(function(line) {
+                    stdout.trim().split('\n').forEach(function(line) {
                         if (line.indexOf('{') !== -1) {
-                            out = JSON.parse(line.trim());
+                            out = JSON.parse(line);
                             result = out.result;
 
                             gutil.log('Took ' + result.runtime + ' ms to run ' + chalk.blue(result.total) + ' tests. ' + chalk.green(result.passed) + ' passed, ' + chalk.red(result.failed) + ' failed.');
