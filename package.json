@@ -1,6 +1,6 @@
 {
   "name": "gulp-qunit",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Run QUnit unit tests in a headless PhantomJS instance.",
   "license": "MIT",
   "repository": "jonkemp/gulp-qunit",
