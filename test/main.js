@@ -35,6 +35,28 @@ describe('gulp-qunit', function() {
         stream.end();
     });
 
+    it('tests should not be affected by console.log in test code', function(cb) {
+        var stream = qunit();
+
+        process.stdout.write = function (str) {
+            //out(str);
+            str = chalk.stripColor(str);
+
+            if (/10 passed. 0 failed./.test(str)) {
+                assert(true);
+                process.stdout.write = out;
+                cb();
+            }
+        };
+
+        stream.write(new gutil.File({
+            path: './test/fixtures/console-log.html',
+            contents: new Buffer('')
+        }));
+
+        stream.end();
+    });
+
     it('tests should pass with options', function(cb) {
         var stream = qunit({'phantomjs-options': ['--ssl-protocol=any']});
 
