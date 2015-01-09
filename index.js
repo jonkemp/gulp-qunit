@@ -47,7 +47,7 @@ module.exports = function (params) {
 
                     stdout.trim().split('\n').forEach(function(line) {
                         if (line.indexOf('{') !== -1) {
-                            out = JSON.parse(line);
+                            out = JSON.parse(line.trim());
                             result = out.result;
 
                             color = result.failed > 0 ? chalk.red : chalk.green;
