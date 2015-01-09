@@ -42,14 +42,17 @@ module.exports = function (params) {
             if (stdout) {
                 try {
                     var out,
-                        result;
+                        result,
+                        color;
 
                     stdout.trim().split('\n').forEach(function(line) {
                         if (line.indexOf('{') !== -1) {
                             out = JSON.parse(line);
                             result = out.result;
 
-                            gutil.log('Took ' + result.runtime + ' ms to run ' + chalk.blue(result.total) + ' tests. ' + chalk.green(result.passed) + ' passed, ' + chalk.red(result.failed) + ' failed.');
+                            color = result.failed > 0 ? chalk.red : chalk.green;
+
+                            gutil.log('Took ' + result.runtime + ' ms to run ' + chalk.blue(result.total) + ' tests. ' + color(result.passed + ' passed, ' + result.failed + ' failed.'));
 
                             if(out.exceptions) {
                                 for(var test in out.exceptions) {
