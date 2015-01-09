@@ -44,21 +44,23 @@ module.exports = function (params) {
                     var out,
                         result;
 
-                    if (stdout.indexOf('{') !== -1) {
-                        out = JSON.parse(stdout.trim());
-                        result = out.result;
+                    stdout.toString().split('\n').forEach(function(line) {
+                        if (line.indexOf('{') !== -1) {
+                            out = JSON.parse(line.trim());
+                            result = out.result;
 
-                        gutil.log('Took ' + result.runtime + ' ms to run ' + chalk.blue(result.total) + ' tests. ' + chalk.green(result.passed) + ' passed, ' + chalk.red(result.failed) + ' failed.');
+                            gutil.log('Took ' + result.runtime + ' ms to run ' + chalk.blue(result.total) + ' tests. ' + chalk.green(result.passed) + ' passed, ' + chalk.red(result.failed) + ' failed.');
 
-                        if(out.exceptions) {
-                            for(var test in out.exceptions) {
-                                gutil.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
+                            if(out.exceptions) {
+                                for(var test in out.exceptions) {
+                                    gutil.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
+                                }
                             }
+                        } else {
+                            line = line.trim(); // Trim trailing cr-lf
+                            gutil.log(line);
                         }
-                    } else {
-                        stdout = stdout.trim(); // Trim trailing cr-lf
-                        gutil.log(stdout);
-                    }
+                    });
                 } catch (e) {
                     this.emit('error', new gutil.PluginError('gulp-qunit', e));
                 }
