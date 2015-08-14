@@ -50,6 +50,18 @@ gulp.task('test', function() {
 });
 ```
 
+With phantomjs2:
+
+```js
+var gulp = require('gulp'),
+    qunit = require('gulp-qunit');
+
+gulp.task('test', function() {
+    return gulp.src('./qunit/test-runner.html')
+        .pipe(qunit({'binPath': require('phantomjs2').path}));
+});
+```
+
 ## API
 
 ### qunit(options)
@@ -67,6 +79,13 @@ Type: `Array`
 Default: `None`
 
 These options are passed on to PhantomJS. See the [PhantomJS documentation](http://phantomjs.org/api/command-line.html) for more information.
+
+#### options.binPath
+
+Type: `String`
+Default: require("phantomjs").path
+
+The option is used to execute phantomjs binary path
 
 ## License
 

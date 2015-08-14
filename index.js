@@ -10,6 +10,7 @@ var path = require('path'),
 
 module.exports = function (params) {
     var options = params || {};
+    binPath = options.binPath || binPath;
 
     return through.obj(function (file, enc, cb) {
         var absolutePath = path.resolve(file.path),
