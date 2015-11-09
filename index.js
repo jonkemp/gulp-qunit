@@ -22,7 +22,7 @@ module.exports = function (params) {
         }
 
         childArgs.push(
-            path.join(__dirname, './node_modules/qunit-phantomjs-runner/runner-json.js'),
+            require.resolve('qunit-phantomjs-runner'),
             (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
         );
 
