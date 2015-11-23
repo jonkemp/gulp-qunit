@@ -1,5 +1,7 @@
 # [gulp](https://github.com/gulpjs/gulp)-qunit [![Build Status](https://travis-ci.org/jonkemp/gulp-qunit.svg?branch=master)](https://travis-ci.org/jonkemp/gulp-qunit)
 
+[![NPM](https://nodei.co/npm/gulp-qunit.png?downloads=true)](https://nodei.co/npm/gulp-qunit/)
+
 > Run QUnit unit tests in a headless PhantomJS instance.
 
 Run QUnit unit tests in a PhantomJS-powered headless test runner, providing basic console output for QUnit tests. Uses the [phantomjs](https://github.com/Medium/phantomjs) node module and the [PhantomJS Runner QUnit Plugin](https://github.com/jonkemp/qunit-phantomjs-runner).
