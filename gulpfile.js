@@ -1,29 +1,25 @@
+/* eslint-disable */
 'use strict';
 
 var gulp = require('gulp'),
-    jshint = require('gulp-jshint'),
+    eslint = require('gulp-eslint'),
     mocha = require('gulp-mocha'),
-    qunit = require('./index'),
-    jscs = require('gulp-jscs');
+    qunit = require('./index');
 
 var paths = {
-    scripts: ['./*.js', './test/*.js', '!./gulpfile.js']
+    scripts: ['./*.js', '!./gulpfile.js']
 };
 
-gulp.task('lint', function() {
+gulp.task('lint', function () {
     return gulp.src(paths.scripts)
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'));
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
 });
 
 gulp.task('test', function() {
     return gulp.src('./test/*.js')
         .pipe(mocha({reporter: 'dot'}));
-});
-
-gulp.task('jscs', function () {
-    return gulp.src(paths.scripts)
-        .pipe(jscs());
 });
 
 gulp.task('qunit', function() {
@@ -32,7 +28,7 @@ gulp.task('qunit', function() {
 });
 
 gulp.task('watch', function () {
-    gulp.watch(paths.scripts, ['lint', 'jscs', 'test']);
+    gulp.watch(paths.scripts, ['lint', 'test']);
 });
 
-gulp.task('default', ['lint', 'jscs', 'test', 'watch']);
+gulp.task('default', ['lint', 'test', 'watch']);
