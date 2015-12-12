@@ -10,15 +10,16 @@ var path = require('path'),
 
 module.exports = function (params) {
     var options = params || {};
+
     binPath = options.binPath || binPath;
 
     return through.obj(function (file, enc, cb) {
         var absolutePath = path.resolve(file.path),
-            isAbsolutePath = absolutePath.indexOf(file.path) >= 0;
+            isAbsolutePath = absolutePath.indexOf(file.path) >= 0,
+            childArgs = [];
 
-        var childArgs = [];
         if (options['phantomjs-options'] && options['phantomjs-options'].length) {
-            childArgs.push( options['phantomjs-options'] );
+            childArgs.push(options['phantomjs-options']);
         }
 
         childArgs.push(
@@ -26,8 +27,8 @@ module.exports = function (params) {
             (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
         );
 
-        if ( options.timeout ) {
-            childArgs.push( options.timeout );
+        if (options.timeout) {
+            childArgs.push(options.timeout);
         }
 
         if (file.isStream()) {
@@ -36,17 +37,17 @@ module.exports = function (params) {
         }
 
         childProcess.execFile(binPath, childArgs, function (err, stdout, stderr) {
-            var passed = true;
+            var passed = true,
+                out,
+                result,
+                color,
+                test;
 
             gutil.log('Testing ' + file.relative);
 
             if (stdout) {
                 try {
-                    var out,
-                        result,
-                        color;
-
-                    stdout.trim().split('\n').forEach(function(line) {
+                    stdout.trim().split('\n').forEach(function (line) {
                         if (line.indexOf('{') !== -1) {
                             out = JSON.parse(line.trim());
                             result = out.result;
@@ -55,8 +56,8 @@ module.exports = function (params) {
 
                             gutil.log('Took ' + result.runtime + ' ms to run ' + chalk.blue(result.total) + ' tests. ' + color(result.passed + ' passed, ' + result.failed + ' failed.'));
 
-                            if(out.exceptions) {
-                                for(var test in out.exceptions) {
+                            if (out.exceptions) {
+                                for (test in out.exceptions) {
                                     gutil.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
                                 }
                             }
@@ -84,7 +85,7 @@ module.exports = function (params) {
                 gutil.log('gulp-qunit: ' + chalk.green('✔ ') + 'QUnit assertions all passed in ' + chalk.blue(file.relative));
             }
 
-            this.emit('gulp-qunit.finished', {'passed': passed});
+            this.emit('gulp-qunit.finished', { 'passed': passed });
 
             this.push(file);
 
