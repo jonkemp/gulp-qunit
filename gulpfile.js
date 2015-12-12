@@ -19,12 +19,21 @@ gulp.task('lint', function () {
 
 gulp.task('test', function() {
     return gulp.src('./test/*.js')
-        .pipe(mocha({reporter: 'dot'}));
+        .pipe(mocha());
 });
 
-gulp.task('qunit', function() {
+gulp.task('qunit:pass', function() {
     return gulp.src('./test/fixtures/passing.html')
         .pipe(qunit());
+});
+
+gulp.task('qunit:fail', function() {
+    return gulp.src('./test/fixtures/failing.html')
+        .pipe(qunit())
+        .on('error', function (err) {
+            console.log(err.toString());
+            this.emit('end');
+        });
 });
 
 gulp.task('watch', function () {
