@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QUnit Test Suite</title>
+    <link rel="stylesheet" href="../../node_modules/qunitjs/qunit/qunit.css" type="text/css" media="screen">
+    <script type="text/javascript" src="../../node_modules/qunitjs/qunit/qunit.js"></script>
+    <!-- Your project file goes here -->
+    <!-- <script type="text/javascript" src="myProject.js"></script>   -->
+    <!-- Your tests file goes here -->
+    <!-- <script type="text/javascript" src="myTests.js"></script>   -->
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+
+    <script>
+       // Let's test this function but "accidentally" leak into global scope.
+        function multiply(a, b) {
+            res = a * b;
+            return res;
+        }
+
+        test('multiply()', function() {
+            ok(multiply(0, 1) === 0, 'Zero times one is zero');
+            ok(multiply(2, 2) === 4, 'Two times two is four');
+            ok(multiply(1, 3) === 3, 'One times three is three');
+            ok(multiply(10, 5) === 50, 'Five times ten is fifty');
+            ok(multiply(10, 10) === 100, 'Ten times ten is one hundred');
+        });
+    </script>
+</body>
+</html>
