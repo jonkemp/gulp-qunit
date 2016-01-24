@@ -62,8 +62,7 @@ module.exports = function (params) {
                                 }
                             }
                         } else {
-                            line = line.trim(); // Trim trailing cr-lf
-                            gutil.log(line);
+                            gutil.log(line.trim());
                         }
                     });
                 } catch (e) {
