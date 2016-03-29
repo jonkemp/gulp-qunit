@@ -1,4 +1,5 @@
 # [gulp](https://github.com/gulpjs/gulp)-qunit [![Build Status](https://travis-ci.org/jonkemp/gulp-qunit.svg?branch=master)](https://travis-ci.org/jonkemp/gulp-qunit)
+[![Coverage Status](https://coveralls.io/repos/jonkemp/gulp-qunit/badge.svg?branch=master&service=github)](https://coveralls.io/github/jonkemp/gulp-qunit?branch=master)
 
 [![NPM](https://nodei.co/npm/gulp-qunit.png?downloads=true)](https://nodei.co/npm/gulp-qunit/)
 

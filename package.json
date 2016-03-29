@@ -14,7 +14,9 @@
   },
   "scripts": {
     "test": "mocha",
-    "lint": "gulp lint"
+    "lint": "gulp lint",
+    "coverage": "nyc npm test && nyc report",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [
     "gulpplugin",
@@ -30,10 +32,12 @@
     "through2": "0.6.5"
   },
   "devDependencies": {
+    "coveralls": "^2.11.9",
     "gulp": "^3.9.0",
-    "gulp-eslint": "^1.1.1",
+    "gulp-eslint": "^2.0.0",
     "gulp-mocha": "^2.2.0",
     "mocha": "*",
+    "nyc": "^6.1.1",
     "qunitjs": "^1.21.0"
   }
 }
