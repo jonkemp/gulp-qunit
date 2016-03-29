@@ -31,6 +31,15 @@ module.exports = function (params) {
             childArgs.push(options.timeout);
         }
 
+        if (options.page) {
+            // Push default timeout value unless specified otherwise
+            if (!options.timeout) {
+                childArgs.push(5);
+            }
+
+            childArgs.push(JSON.stringify(options.page));
+        }
+
         if (file.isStream()) {
             this.emit('error', new gutil.PluginError('gulp-qunit', 'Streaming not supported'));
             return cb();

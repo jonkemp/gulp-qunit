@@ -101,6 +101,30 @@ describe('gulp-qunit', function() {
         stream.end();
     });
 
+    it('should set custom viewport', function (done) {
+        var stream = qunit({'page': {
+                viewportSize: { width: 1280, height: 800 }
+            }});
+
+        process.stdout.write = function (str) {
+            //out(str);
+            str = chalk.stripColor(str);
+
+            if (/2 passed. 0 failed./.test(str)) {
+                assert(true);
+                process.stdout.write = out;
+                done();
+            }
+        };
+
+        stream.write(new gutil.File({
+            path: './test/fixtures/custom-viewport.html',
+            contents: new Buffer('')
+        }));
+
+        stream.end();
+    });
+
     it('tests should time out', function(done) {
         this.timeout(10000);
 

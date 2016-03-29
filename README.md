@@ -42,6 +42,20 @@ gulp.task('test', function() {
 });
 ```
 
+With page options:
+
+```js
+var gulp = require('gulp'),
+    qunit = require('gulp-qunit');
+
+gulp.task('test', function() {
+    return gulp.src('./qunit/test-runner.html')
+        .pipe(qunit({'page': {
+            viewportSize: { width: 1280, height: 800 }
+        }}));
+});
+```
+
 You no longer need this plugin to run QUnit tests in your gulp tasks. Now you can do this with [node-qunit-phantomjs](https://github.com/jonkemp/node-qunit-phantomjs), a stand alone module. It can also be used via command line, and it has an option for more verbose test reporting.
 ```js
 var gulp = require('gulp'),
@@ -81,6 +95,13 @@ Type: `Array`
 Default: `None`
 
 These options are passed on to PhantomJS. See the [PhantomJS documentation](http://phantomjs.org/api/command-line.html) for more information.
+
+#### options.page
+
+Type: `Object`  
+Default: `None`
+
+These options are passed on to PhantomJS. See the [PhantomJS documentation](http://phantomjs.org/page-automation.html) for more information.
 
 #### options.binPath
 
