@@ -40,9 +40,14 @@ module.exports = function (params) {
             childArgs.push(JSON.stringify(options.page));
         }
 
+        if (file.isNull()) {
+            cb(null, file);
+            return;
+        }
+
         if (file.isStream()) {
-            this.emit('error', new gutil.PluginError('gulp-qunit', 'Streaming not supported'));
-            return cb();
+            cb(new gutil.PluginError('gulp-qunit', 'Streaming not supported'));
+            return;
         }
 
         childProcess.execFile(binPath, childArgs, function (err, stdout, stderr) {
