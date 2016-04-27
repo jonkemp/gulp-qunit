@@ -19,7 +19,11 @@ module.exports = function (params) {
             childArgs = [];
 
         if (options['phantomjs-options'] && options['phantomjs-options'].length) {
-            childArgs.push(options['phantomjs-options']);
+            if (Array.isArray(options['phantomjs-options'])) {
+                childArgs = childArgs.concat(options['phantomjs-options']);
+            } else {
+                childArgs.push(options['phantomjs-options']);
+            }
         }
 
         childArgs.push(
