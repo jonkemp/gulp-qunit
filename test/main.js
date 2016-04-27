@@ -100,6 +100,28 @@ describe('gulp-qunit', function() {
 
         stream.end();
     });
+    
+    it('tests should pass with more than one options', function(done) {
+        var stream = qunit({'phantomjs-options': ['--ignore-ssl-errors=true', '--web-security=false']});
+
+        process.stdout.write = function (str) {
+            str = chalk.stripColor(str);
+
+            if (/10 passed. 0 failed./.test(str)) {
+                assert(true);
+                process.stdout.write = out;
+                done();
+            }
+        };
+
+        stream.write(new gutil.File({
+            path: './test/fixtures/passing.html',
+            contents: new Buffer('')
+        }));
+
+        stream.end();
+    });
+
 
     it('should set custom viewport', function (done) {
         var stream = qunit({'page': {
