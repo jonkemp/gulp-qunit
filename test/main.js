@@ -251,4 +251,27 @@ describe('gulp-qunit', function() {
 
         stream.end();
     });
+
+    it('tests should fail', function(done) {
+        var stream = qunit({ noGlobals: true });
+
+        process.stdout.write = function (str) {
+            out(str);
+            str = chalk.stripColor(str);
+            out(str);
+
+            if (/Introduced global variable\(s\): res/.test(str)) {
+                assert(true);
+                done();
+                process.stdout.write = out;
+            }
+        };
+
+        stream.write(new gutil.File({
+            path: './test/fixtures/no-globals.html',
+            contents: new Buffer('')
+        }));
+
+        stream.end();
+    });
 });

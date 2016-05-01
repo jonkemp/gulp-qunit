@@ -16,7 +16,16 @@ module.exports = function (params) {
     return through.obj(function (file, enc, cb) {
         var absolutePath = path.resolve(file.path),
             isAbsolutePath = absolutePath.indexOf(file.path) >= 0,
+            queryParams = [],
             childArgs = [];
+
+        if (options.noGlobals) {
+            queryParams.push('noglobals');
+        }
+
+        if (options.noTryCatch) {
+            queryParams.push('notrycatch');
+        }
 
         if (options['phantomjs-options'] && options['phantomjs-options'].length) {
             if (Array.isArray(options['phantomjs-options'])) {
@@ -28,7 +37,8 @@ module.exports = function (params) {
 
         childArgs.push(
             require.resolve('qunit-phantomjs-runner'),
-            (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
+            (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path) +
+                (queryParams.length ? '?' + queryParams.join('&') : '')
         );
 
         if (options.timeout) {
