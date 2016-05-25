@@ -110,6 +110,13 @@ Default: require("phantomjs").path
 
 The option is used to execute phantomjs binary path
 
+#### options.runner
+
+Type: `String`
+Default: require.resolve('qunit-phantomjs-runner')
+
+This option is used to configure the test runner used to control phantomjs
+
 ## License
 
 MIT © [Jonathan Kemp](http://jonkemp.com)
