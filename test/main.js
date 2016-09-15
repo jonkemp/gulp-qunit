@@ -11,7 +11,7 @@ var assert = require('assert'),
     out = process.stdout.write.bind(process.stdout);
 
 describe('gulp-qunit', function() {
-    this.timeout(5000);
+    this.timeout(10000);
 
     it('tests should pass', function(done) {
         var stream = qunit();
@@ -100,7 +100,7 @@ describe('gulp-qunit', function() {
 
         stream.end();
     });
-    
+
     it('tests should pass with more than one options', function(done) {
         var stream = qunit({'phantomjs-options': ['--ignore-ssl-errors=true', '--web-security=false']});
 
@@ -121,7 +121,6 @@ describe('gulp-qunit', function() {
 
         stream.end();
     });
-
 
     it('should set custom viewport', function (done) {
         var stream = qunit({'page': {
