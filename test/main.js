@@ -4,7 +4,7 @@
 'use strict';
 
 var assert = require('assert'),
-    chalk = require('chalk'),
+    stripAnsi = require('strip-ansi'),
     gutil = require('gulp-util'),
     path = require('path'),
     qunit = require('../index'),
@@ -18,7 +18,7 @@ describe('gulp-qunit', function() {
 
         process.stdout.write = function (str) {
             //out(str);
-            str = chalk.stripColor(str);
+            str = stripAnsi(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -40,7 +40,7 @@ describe('gulp-qunit', function() {
 
         process.stdout.write = function (str) {
             //out(str);
-            str = chalk.stripColor(str);
+            str = stripAnsi(str);
 
             if (/10 passed. 1 failed./.test(str)) {
                 assert(true);
@@ -62,7 +62,7 @@ describe('gulp-qunit', function() {
 
         process.stdout.write = function (str) {
             //out(str);
-            str = chalk.stripColor(str);
+            str = stripAnsi(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -84,7 +84,7 @@ describe('gulp-qunit', function() {
 
         process.stdout.write = function (str) {
             //out(str);
-            str = chalk.stripColor(str);
+            str = stripAnsi(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -105,7 +105,7 @@ describe('gulp-qunit', function() {
         var stream = qunit({'phantomjs-options': ['--ignore-ssl-errors=true', '--web-security=false']});
 
         process.stdout.write = function (str) {
-            str = chalk.stripColor(str);
+            str = stripAnsi(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -129,7 +129,7 @@ describe('gulp-qunit', function() {
 
         process.stdout.write = function (str) {
             //out(str);
-            str = chalk.stripColor(str);
+            str = stripAnsi(str);
 
             if (/2 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -208,7 +208,7 @@ describe('gulp-qunit', function() {
 
         process.stdout.write = function (str) {
             //out(str);
-            str = chalk.stripColor(str);
+            str = stripAnsi(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -234,7 +234,7 @@ describe('gulp-qunit', function() {
 
         process.stdout.write = function (str) {
             //out(str);
-            str = chalk.stripColor(str);
+            str = stripAnsi(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
