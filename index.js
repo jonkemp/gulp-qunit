@@ -17,7 +17,9 @@ module.exports = function (params) {
         var absolutePath = path.resolve(file.path),
             isAbsolutePath = absolutePath.indexOf(file.path) >= 0,
             childArgs = [],
-            runner = options.runner || require.resolve('qunit-phantomjs-runner');
+            runner = options.runner || require.resolve('qunit-phantomjs-runner'),
+            proc,
+            passed = true;
 
         if (options['phantomjs-options'] && options['phantomjs-options'].length) {
             if (Array.isArray(options['phantomjs-options'])) {
@@ -55,59 +57,61 @@ module.exports = function (params) {
             return;
         }
 
-        childProcess.execFile(binPath, childArgs, function (err, stdout, stderr) {
-            var passed = true,
-                out,
-                result,
-                color,
-                test;
+        gutil.log('Testing ' + chalk.blue(file.relative));
 
-            gutil.log('Testing ' + file.relative);
+        try {
+            proc = childProcess.spawn(binPath, childArgs);
 
-            if (stdout) {
+            proc.stdout.on('data', function (data) {
+                var out,
+                    test,
+                    message,
+                    line = data.toString().trim();
+
                 try {
-                    stdout.trim().split('\n').forEach(function (line) {
-                        if (line.indexOf('{') !== -1) {
-                            out = JSON.parse(line.trim());
-                            result = out.result;
-
-                            color = result.failed > 0 ? chalk.red : chalk.green;
-
-                            gutil.log('Took ' + result.runtime + ' ms to run ' + chalk.blue(result.total) + ' tests. ' + color(result.passed + ' passed, ' + result.failed + ' failed.'));
-
-                            if (out.exceptions) {
-                                for (test in out.exceptions) {
-                                    gutil.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
-                                }
-                            }
-                        } else {
-                            gutil.log(line.trim());
-                        }
-                    });
-                } catch (e) {
-                    this.emit('error', new gutil.PluginError('gulp-qunit', e));
+                    out = JSON.parse(line);
+                } catch (err) {
+                    gutil.log(line);
+                    return;
                 }
-            }
 
-            if (stderr) {
+                if (out.exceptions) {
+                    for (test in out.exceptions) {
+                        gutil.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
+                    }
+                }
+
+                if (out.result) {
+                    message = 'Took ' + out.result.runtime + ' ms to run ' + out.result.total + ' tests. ' + out.result.passed + ' passed, ' + out.result.failed + ' failed.';
+
+                    gutil.log(out.result.failed > 0 ? chalk.red(message) : chalk.green(message));
+                }
+            });
+
+            proc.stderr.on('data', function (data) {
+                var stderr = data.toString().trim();
+
                 gutil.log(stderr);
                 this.emit('error', new gutil.PluginError('gulp-qunit', stderr));
                 passed = false;
-            }
+            });
 
-            if (err) {
-                gutil.log('gulp-qunit: ' + chalk.red('✖ ') + 'QUnit assertions failed in ' + chalk.blue(file.relative));
-                this.emit('error', new gutil.PluginError('gulp-qunit', err));
-                passed = false;
-            } else {
-                gutil.log('gulp-qunit: ' + chalk.green('✔ ') + 'QUnit assertions all passed in ' + chalk.blue(file.relative));
-            }
+            proc.on('close', function (code) {
+                if (code === 1) {
+                    gutil.log('gulp-qunit: ' + chalk.red('✖ ') + 'QUnit assertions failed in ' + chalk.blue(file.relative));
+                    passed = false;
+                } else {
+                    gutil.log('gulp-qunit: ' + chalk.green('✔ ') + 'QUnit assertions all passed in ' + chalk.blue(file.relative));
+                }
 
-            this.emit('gulp-qunit.finished', { 'passed': passed });
+                this.emit('gulp-qunit.finished', { 'passed': passed });
+            });
+        } catch (e) {
+            this.emit('error', new gutil.PluginError('gulp-qunit', e));
+        }
 
-            this.push(file);
+        this.push(file);
 
-            return cb();
-        }.bind(this));
+        cb();
     });
 };
