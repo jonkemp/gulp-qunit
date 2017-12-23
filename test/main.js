@@ -5,7 +5,7 @@
 
 var assert = require('assert'),
     stripAnsi = require('strip-ansi'),
-    gutil = require('gulp-util'),
+    Vinyl = require('vinyl'),
     path = require('path'),
     qunit = require('../index'),
     out = process.stdout.write.bind(process.stdout);
@@ -27,7 +27,7 @@ describe('gulp-qunit', function() {
             }
         };
 
-        stream.write(new gutil.File({
+        stream.write(new Vinyl({
             path: './test/fixtures/passing.html',
             contents: new Buffer('')
         }));
@@ -49,7 +49,7 @@ describe('gulp-qunit', function() {
             }
         };
 
-        stream.write(new gutil.File({
+        stream.write(new Vinyl({
             path: './test/fixtures/failing.html',
             contents: new Buffer('')
         }));
@@ -71,7 +71,7 @@ describe('gulp-qunit', function() {
             }
         };
 
-        stream.write(new gutil.File({
+        stream.write(new Vinyl({
             path: './test/fixtures/console-log.html',
             contents: new Buffer('')
         }));
@@ -93,7 +93,7 @@ describe('gulp-qunit', function() {
             }
         };
 
-        stream.write(new gutil.File({
+        stream.write(new Vinyl({
             path: './test/fixtures/passing.html',
             contents: new Buffer('')
         }));
@@ -114,7 +114,7 @@ describe('gulp-qunit', function() {
             }
         };
 
-        stream.write(new gutil.File({
+        stream.write(new Vinyl({
             path: './test/fixtures/passing.html',
             contents: new Buffer('')
         }));
@@ -138,7 +138,7 @@ describe('gulp-qunit', function() {
             }
         };
 
-        stream.write(new gutil.File({
+        stream.write(new Vinyl({
             path: './test/fixtures/custom-viewport.html',
             contents: new Buffer('')
         }));
@@ -163,7 +163,7 @@ describe('gulp-qunit', function() {
 
         stream.on('error', function () {});
 
-        stream.write(new gutil.File({
+        stream.write(new Vinyl({
             path: './test/fixtures/async.html',
             contents: new Buffer('')
         }));
@@ -195,7 +195,7 @@ describe('gulp-qunit', function() {
             }
         };
 
-        stream.write(new gutil.File({
+        stream.write(new Vinyl({
             path: './test/fixtures/passing.html',
             contents: new Buffer('')
         }));
@@ -217,7 +217,7 @@ describe('gulp-qunit', function() {
             }
         };
 
-        stream.write(new gutil.File({
+        stream.write(new Vinyl({
             path: path.resolve('./test/fixtures/passing.html'),
             contents: new Buffer('')
         }));
@@ -243,7 +243,7 @@ describe('gulp-qunit', function() {
             }
         };
 
-        stream.write(new gutil.File({
+        stream.write(new Vinyl({
             path: path.resolve('./test/fixtures/passing.html'),
             contents: new Buffer('')
         }));
