@@ -17,17 +17,17 @@ gulp.task('lint', function () {
         .pipe(eslint.failAfterError());
 });
 
-gulp.task('test', function() {
+gulp.task('test', function () {
     return gulp.src('./test/*.js')
         .pipe(mocha());
 });
 
-gulp.task('qunit:pass', function() {
+gulp.task('qunit:pass', function () {
     return gulp.src('./test/fixtures/passing.html')
         .pipe(qunit());
 });
 
-gulp.task('qunit:fail', function() {
+gulp.task('qunit:fail', function () {
     return gulp.src('./test/fixtures/failing.html')
         .pipe(qunit())
         .on('error', function (err) {
@@ -37,7 +37,7 @@ gulp.task('qunit:fail', function() {
 });
 
 gulp.task('watch', function () {
-    gulp.watch(paths.scripts, ['lint', 'test']);
+    gulp.watch(paths.scripts, gulp.parallel('lint', 'test'));
 });
 
-gulp.task('default', ['lint', 'test', 'watch']);
+gulp.task('default', gulp.parallel('lint', 'test', 'watch'));
