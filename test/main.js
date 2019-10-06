@@ -29,7 +29,7 @@ describe('gulp-qunit', function() {
 
         stream.write(new Vinyl({
             path: './test/fixtures/passing.html',
-            contents: new Buffer('')
+            contents: Buffer.from('')
         }));
 
         stream.end();
@@ -51,7 +51,7 @@ describe('gulp-qunit', function() {
 
         stream.write(new Vinyl({
             path: './test/fixtures/failing.html',
-            contents: new Buffer('')
+            contents: Buffer.from('')
         }));
 
         stream.end();
@@ -73,7 +73,7 @@ describe('gulp-qunit', function() {
 
         stream.write(new Vinyl({
             path: './test/fixtures/console-log.html',
-            contents: new Buffer('')
+            contents: Buffer.from('')
         }));
 
         stream.end();
@@ -95,7 +95,7 @@ describe('gulp-qunit', function() {
 
         stream.write(new Vinyl({
             path: './test/fixtures/passing.html',
-            contents: new Buffer('')
+            contents: Buffer.from('')
         }));
 
         stream.end();
@@ -116,7 +116,7 @@ describe('gulp-qunit', function() {
 
         stream.write(new Vinyl({
             path: './test/fixtures/passing.html',
-            contents: new Buffer('')
+            contents: Buffer.from('')
         }));
 
         stream.end();
@@ -140,7 +140,7 @@ describe('gulp-qunit', function() {
 
         stream.write(new Vinyl({
             path: './test/fixtures/custom-viewport.html',
-            contents: new Buffer('')
+            contents: Buffer.from('')
         }));
 
         stream.end();
@@ -165,7 +165,7 @@ describe('gulp-qunit', function() {
 
         stream.write(new Vinyl({
             path: './test/fixtures/async.html',
-            contents: new Buffer('')
+            contents: Buffer.from('')
         }));
 
         stream.end();
@@ -197,7 +197,7 @@ describe('gulp-qunit', function() {
 
         stream.write(new Vinyl({
             path: './test/fixtures/passing.html',
-            contents: new Buffer('')
+            contents: Buffer.from('')
         }));
 
         stream.end();
@@ -219,7 +219,7 @@ describe('gulp-qunit', function() {
 
         stream.write(new Vinyl({
             path: path.resolve('./test/fixtures/passing.html'),
-            contents: new Buffer('')
+            contents: Buffer.from('')
         }));
 
         stream.end();
@@ -245,7 +245,7 @@ describe('gulp-qunit', function() {
 
         stream.write(new Vinyl({
             path: path.resolve('./test/fixtures/passing.html'),
-            contents: new Buffer('')
+            contents: Buffer.from('')
         }));
 
         stream.end();
