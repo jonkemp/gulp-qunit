@@ -1,26 +1,24 @@
-'use strict';
+const path = require('path');
+const childProcess = require('child_process');
+const PluginError = require('plugin-error');
+const log = require('fancy-log');
+const chalk = require('chalk');
+const through = require('through2');
+const phantomjs = require('phantomjs-prebuilt');
+let binPath = phantomjs.path;
 
-var path = require('path'),
-    childProcess = require('child_process'),
-    PluginError = require('plugin-error'),
-    log = require('fancy-log'),
-    chalk = require('chalk'),
-    through = require('through2'),
-    phantomjs = require('phantomjs-prebuilt'),
-    binPath = phantomjs.path;
-
-module.exports = function (params) {
-    var options = params || {};
+module.exports = params => {
+    const options = params || {};
 
     binPath = options.binPath || binPath;
 
     return through.obj(function (file, enc, cb) {
-        var absolutePath = path.resolve(file.path),
-            isAbsolutePath = absolutePath.indexOf(file.path) >= 0,
-            childArgs = [],
-            runner = options.runner || require.resolve('qunit-phantomjs-runner'),
-            proc,
-            passed = true;
+        const absolutePath = path.resolve(file.path);
+        const isAbsolutePath = absolutePath.indexOf(file.path) >= 0;
+        let childArgs = [];
+        const runner = options.runner || require.resolve('qunit-phantomjs-runner');
+        let proc;
+        let passed = true;
 
         if (options['phantomjs-options'] && options['phantomjs-options'].length) {
             if (Array.isArray(options['phantomjs-options'])) {
@@ -32,7 +30,7 @@ module.exports = function (params) {
 
         childArgs.push(
             runner,
-            (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
+            (isAbsolutePath ? `file:///${absolutePath.replace(/\\/g, '/')}` : file.path)
         );
 
         if (options.timeout) {
@@ -58,16 +56,16 @@ module.exports = function (params) {
             return;
         }
 
-        log('Testing ' + chalk.blue(file.relative));
+        log(`Testing ${chalk.blue(file.relative)}`);
 
         try {
             proc = childProcess.spawn(binPath, childArgs);
 
-            proc.stdout.on('data', function (data) {
-                var out,
-                    test,
-                    message,
-                    line = data.toString().trim();
+            proc.stdout.on('data', data => {
+                let out;
+                let test;
+                let message;
+                const line = data.toString().trim();
 
                 try {
                     out = JSON.parse(line);
@@ -78,19 +76,19 @@ module.exports = function (params) {
 
                 if (out.exceptions) {
                     for (test in out.exceptions) {
-                        log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
+                        log(`\n${chalk.red('Test failed')}: ${chalk.red(test)}: \n${out.exceptions[test].join('\n  ')}`);
                     }
                 }
 
                 if (out.result) {
-                    message = 'Took ' + out.result.runtime + ' ms to run ' + out.result.total + ' tests. ' + out.result.passed + ' passed, ' + out.result.failed + ' failed.';
+                    message = `Took ${out.result.runtime} ms to run ${out.result.total} tests. ${out.result.passed} passed, ${out.result.failed} failed.`;
 
                     log(out.result.failed > 0 ? chalk.red(message) : chalk.green(message));
                 }
             });
 
             proc.stderr.on('data', function (data) {
-                var stderr = data.toString().trim();
+                const stderr = data.toString().trim();
 
                 log(stderr);
                 this.emit('error', new PluginError('gulp-qunit', stderr));
@@ -99,10 +97,10 @@ module.exports = function (params) {
 
             proc.on('close', function (code) {
                 if (code === 1) {
-                    log('gulp-qunit: ' + chalk.red('✖ ') + 'QUnit assertions failed in ' + chalk.blue(file.relative));
+                    log(`gulp-qunit: ${chalk.red('✖ ')}QUnit assertions failed in ${chalk.blue(file.relative)}`);
                     passed = false;
                 } else {
-                    log('gulp-qunit: ' + chalk.green('✔ ') + 'QUnit assertions all passed in ' + chalk.blue(file.relative));
+                    log(`gulp-qunit: ${chalk.green('✔ ')}QUnit assertions all passed in ${chalk.blue(file.relative)}`);
                 }
 
                 this.emit('gulp-qunit.finished', { 'passed': passed });
