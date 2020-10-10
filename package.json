@@ -25,23 +25,23 @@
     "qunit"
   ],
   "dependencies": {
-    "chalk": "^3.0.0",
+    "chalk": "^4.1.0",
     "fancy-log": "^1.3.3",
     "phantomjs-prebuilt": "^2.1.16",
     "plugin-error": "^1.0.1",
-    "qunit-phantomjs-runner": "^2.4.1",
-    "through2": "^3.0.1"
+    "qunit-phantomjs-runner": "^2.4.2",
+    "through2": "^4.0.2"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
-    "coveralls": "^3.0.9",
+    "babel-eslint": "^10.1.0",
+    "coveralls": "^3.1.0",
     "gulp": "^4.0.2",
     "gulp-eslint": "^6.0.0",
     "gulp-mocha": "^7.0.2",
-    "mocha": "^7.0.0",
-    "nyc": "^15.0.0",
-    "qunit": "^2.9.3",
+    "mocha": "^8.1.3",
+    "nyc": "^15.1.0",
+    "qunit": "^2.11.3",
     "strip-ansi": "^6.0.0",
-    "vinyl": "^2.2.0"
+    "vinyl": "^2.2.1"
   }
 }
