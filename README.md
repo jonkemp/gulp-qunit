@@ -1,4 +1,4 @@
-# [gulp](https://github.com/gulpjs/gulp)-qunit ![Build Status](https://github.com/jonkemp/gulp-/actions/workflows/main.yml/badge.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/jonkemp/gulp-qunit/badge.svg?branch=master&service=github)](https://coveralls.io/github/jonkemp/gulp-qunit?branch=master)
+# [gulp](https://github.com/gulpjs/gulp)-qunit ![Build Status](https://github.com/jonkemp/gulp-qunit/actions/workflows/main.yml/badge.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/jonkemp/gulp-qunit/badge.svg?branch=master&service=github)](https://coveralls.io/github/jonkemp/gulp-qunit?branch=master)
 
 [![NPM](https://nodei.co/npm/gulp-qunit.png?downloads=true)](https://nodei.co/npm/gulp-qunit/)
 
